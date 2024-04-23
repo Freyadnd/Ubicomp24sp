@@ -17,8 +17,12 @@ This tool is designed to be versatile for various strength training exercises, i
 View the script by navigating to [code.py](./code.py) in the project directory.
 
 ### Visuals
-For an overview of how the wearable device looks, refer to the images:
-- ![Wearable Device Photo 1](./wearable1.jpg)
-- ![Wearable Device Photo 2](./wearable2.jpg)
+For an overview of how the wearable device looks, refer to the images below:
+
+<p float="left">
+  <img src="./wearable1.jpg" width="50%" />
+  <img src="./wearable2.jpg" width="50%" />
+</p>
+
 - **Video Demonstration**: [[Link to the demo video](https://drive.google.com/file/d/1ncrKjRcByigJREtMyB1X0YjKiuNG2gcC/view?usp=sharing)]
 

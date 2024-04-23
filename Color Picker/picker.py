@@ -11,7 +11,7 @@ sensor = adafruit_tcs34725.TCS34725(i2c)
 def get_color():
     # pick color
     color = sensor.color_rgb_bytes
-    print("颜色 RGB: {}".format(color))
+    print("color RGB: {}".format(color))
     return color
 
 while True:
