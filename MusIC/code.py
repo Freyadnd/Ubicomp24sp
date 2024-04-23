@@ -14,10 +14,6 @@ def play_sound(sound):
         cp.play_tone(200, 0.3)  # Snare drum
     elif sound == "bass-drum":
         cp.play_tone(60, 0.5)  # Bass drum
-    elif sound == "cymbal":
-        cp.play_tone(3200, 0.2)  # Cymbal
-    elif sound == "tom-tom":
-        cp.play_tone(160, 0.4)  # Tom-tom
 
 all_events = []  # Stores all recorded sound events
 

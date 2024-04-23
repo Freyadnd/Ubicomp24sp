@@ -38,6 +38,6 @@ To operate the device:
 
 ### Visuals
 
-- **Initial Version Video Demonstration**: [[Link to the demo video](https://drive.google.com/file/d/1ncrKjRcByigJREtMyB1X0YjKiuNG2gcC/view?usp=sharing)]
+- **Initial Version Video Demonstration**: [[Link to the demo video](https://drive.google.com/file/d/1q6h2zEb2kOLZN7v3UetuF-mIlppYqGHX/view?usp=sharing)]
 
-- **Improved Version Video Demonstration**: [[Link to the demo video](https://drive.google.com/file/d/1ncrKjRcByigJREtMyB1X0YjKiuNG2gcC/view?usp=sharing)]
+- **Improved Version Video Demonstration**: [[Link to the demo video](https://drive.google.com/file/d/1wKIGA_MDA-yhdo6PdSRMtTdN9FWDUKPu/view?usp=drive_link)]
