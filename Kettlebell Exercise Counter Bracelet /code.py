@@ -2,7 +2,7 @@ from adafruit_circuitplayground import cp
 import time
 
 # set parameter
-sets = 3  
+sets = 3  # work out plan
 reps_per_set = 10  
 threshold = 15  
 
@@ -11,7 +11,7 @@ reps_done = 0
 sets_done = 0
 
 while sets_done < sets:
-    cp.red_led = True  # start point
+    cp.red_led = True  # start
     while reps_done < reps_per_set:
         # accelerator
         x, y, z = cp.acceleration
@@ -21,12 +21,12 @@ while sets_done < sets:
             print(f"Rep {reps_done} done")
             cp.play_tone(440, 0.1)  # play sound
             time.sleep(1)  # avoid multi-count
-    cp.play_tone(262, 1)  # different sound
+    cp.play_tone(262, 1)  # different sound for completeing a set
     print(f"Set {sets_done + 1} completed")
     reps_done = 0
     sets_done += 1
     cp.red_led = False
-    time.sleep(3)  # rest
+    time.sleep(3)  # rest 
 
 print("Workout completed!")
 cp.play_tone(523, 2)  # final sound
