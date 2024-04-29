@@ -1,69 +1,54 @@
 from adafruit_circuitplayground import cp
 import time
 
-sounds = {
-    'A1': 'hi-hat',
-    'A2': 'snare-drum',
-    'A3': 'bass-drum',
-    'A4': 'cymbal',
-    'A5': 'tom-tom'
-}
+WORK_TIME = 25 * 60  # 25 minutes
+SHORT_BREAK = 5 * 60  # 5 minutes
+LONG_BREAK = 15 * 60  # 15 minutes
 
-loop_active = False  # Controls the loop playback state
+timer = WORK_TIME
+state = 'work'
+is_running = False
 
-# Function to play sounds
-def play_sound(sound):
-    if sound == "hi-hat":
-        cp.play_tone(4000, 0.1)  # Hi-hat
-    elif sound == "snare-drum":
-        cp.play_tone(200, 0.3)  # Snare drum
-    elif sound == "bass-drum":
-        cp.play_tone(60, 0.5)  # Bass drum
-    elif sound == "cymbal":
-        cp.play_tone(3200, 0.2)  # Cymbal
-    elif sound == "tom-tom":
-        cp.play_tone(160, 0.4)  # Tom-tom
-
-all_events = []  # Stores all recorded sound events
-
-def check_and_play_events():
-    current_time = time.monotonic()
-    for event in list(all_events):  # Create a list copy to allow modifications
-        event_time, sound = event
-        if current_time >= event_time:
-            play_sound(sound)
-            all_events.remove(event)  # Remove played event
-            all_events.append((current_time + 6, sound))  # Reschedule event to play after 6 seconds
-
-def update_leds(loop_status):
-    # Update LED based on loop status
-    if loop_status:
-        # Light up the first LED with a soft green light to indicate looping is active
-        cp.pixels[0] = (0, 20, 0)  # Soft green color
-    else:
-        # Turn off the first LED
-        cp.pixels[0] = (0, 0, 0)
-
-# Main loop
-while True:
-    # Check each touch pad and play the associated sound
-    for touch_pad, sound in sounds.items():
-        if getattr(cp, f'touch_{touch_pad}'):
-            play_sound(sound)
-            if loop_active:
-                next_play_time = time.monotonic() + 6  # Schedule to play after 6 seconds
-                all_events.append((next_play_time, sound))
-
-    if cp.button_b:
-        loop_active = not loop_active  # Toggle loop playback state
-        update_leds(loop_active)  # Update LED indicator based on loop state
-        if loop_active:
-            print("Loop started")
+def update_leds():
+    total_time = WORK_TIME if state == 'work' else SHORT_BREAK if state == 'short_break' else LONG_BREAK
+    leds_on = round((timer / total_time) * 10)  # calculate the number of LEDs to light
+    for i in range(10):
+        if i < leds_on:
+            cp.pixels[i] = (0, 255, 0) if state == 'work' else (0, 0, 255)
         else:
-            print("Loop stopped")
-            all_events.clear()  # Clear all events when loop is stopped
+            cp.pixels[i] = (0, 0, 0)
 
-    if loop_active:
-        check_and_play_events()  # Check and play sound events
-
-    time.sleep(0.01)  # Short delay to reduce CPU load
+while True:
+    if cp.button_a:  # toggle running state
+        is_running = not is_running
+        while cp.button_a:  # debounce button A
+            pass
+        if is_running:
+            print("Timer started")
+        else:
+            print("Timer paused")
+    
+    if cp.button_b:  # reset the timer
+        timer = WORK_TIME
+        state = 'work'
+        is_running = False
+        print("Timer reset")
+        while cp.button_b:  # debounce button B
+            pass
+    
+    if is_running:
+        if timer > 0:
+            update_leds()
+            time.sleep(1)
+            timer -= 1
+        else:
+            if state == 'work':
+                state = 'short_break' if (timer // WORK_TIME) % 8 != 0 else 'long_break'
+                timer = SHORT_BREAK if state == 'short_break' else LONG_BREAK
+                cp.play_tone(500, 1)  # signal break start
+            else:
+                state = 'work'
+                timer = WORK_TIME
+                cp.play_tone(1000, 1)  # signal work start
+            print(f"Switched to {state}")
+    update_leds()
